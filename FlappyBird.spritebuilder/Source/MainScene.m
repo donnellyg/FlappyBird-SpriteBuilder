@@ -14,6 +14,14 @@
     CCNode *_ground2;
     NSArray *_grounds;
     
+    CCNode *_cloud1;
+    CCNode *_cloud2;
+    NSArray *_clouds;
+    
+    CCNode *_bush1;
+    CCNode *_bush2;
+    NSArray *_bushes;
+    
     NSTimeInterval _sinceTouch;
     
     NSMutableArray *_obstacles;
@@ -32,6 +40,8 @@
     self.userInteractionEnabled = TRUE;
     
     _grounds = @[_ground1, _ground2];
+    _clouds = @[_cloud1, _cloud2];
+    _bushes = @[_bush1, _bush2];
     
     for (CCNode *ground in _grounds) {
         // set collision txpe
@@ -141,6 +151,16 @@
         // if the left corner is one complete width off the screen, move it to the right
         if (groundScreenPosition.x <= (-1 * ground.contentSize.width)) {
             ground.position = ccp(ground.position.x + 2 * ground.contentSize.width, ground.position.y);
+        }
+    }
+    
+    for (CCNode *cloud in _clouds) {
+        // move the cloud
+        cloud.position = ccp((cloud.position.x - character.physicsBody.velocity.x * delta), cloud.position.y);
+        
+        // if the cloud is completely off the screen:
+        if (cloud.position.x <= -1 * cloud.contentSize.width) {
+            cloud.position = ccp(cloud.contentSize.width, cloud.position.y);
         }
     }
     
