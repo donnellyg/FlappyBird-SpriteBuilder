@@ -156,11 +156,20 @@
     
     for (CCNode *cloud in _clouds) {
         // move the cloud
-        cloud.position = ccp((cloud.position.x - character.physicsBody.velocity.x * delta), cloud.position.y);
+        cloud.position = ccp((cloud.position.x - character.physicsBody.velocity.x * delta / 4), cloud.position.y);
         
         // if the cloud is completely off the screen:
         if (cloud.position.x <= -1 * cloud.contentSize.width) {
             cloud.position = ccp(cloud.contentSize.width, cloud.position.y);
+        }
+    }
+    
+    for (CCNode *bush in _bushes) {
+        
+        bush.position = ccp(bush.position.x + character.physicsBody.velocity.x * delta, bush.position.y);
+        
+        if (bush.position.x <= bush.contentSize.width * -1) {
+            bush.position = ccp(bush.contentSize.width, bush.position.y);
         }
     }
     
